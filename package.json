@@ -1,6 +1,6 @@
 {
   "name": "@msegoviadev/api-mind",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "LLM tools for API discovery from .mind spec files",
   "author": {
     "name": "msegoviadev",
@@ -19,7 +19,9 @@
   "exports": {
     ".": "./dist/index.js"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "bun build ./src/index.ts --outdir dist --target bun",
     "test": "bun test"
