@@ -1,7 +1,7 @@
 {
-  "name": "curl-mind",
+  "name": "api-mind",
   "version": "1.0.0",
-  "description": "LLM tools for HTTP API interaction via curl",
+  "description": "LLM tools for API discovery from .mind spec files",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

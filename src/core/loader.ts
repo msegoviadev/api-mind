@@ -1,4 +1,4 @@
-import type { EndpointIndex, ApiMeta, EndpointEntry, InitOptions } from "./types"
+import type { EndpointIndex, ApiMeta, EndpointEntry, InitOptions, GetEndpointSchemaResult } from "./types"
 import { parseApiHeader, parseServers, parseEndpoints } from "./parser"
 
 let indexPromise: Promise<EndpointIndex> | null = null
@@ -45,7 +45,7 @@ async function buildIndex(specsDir: string): Promise<EndpointIndex> {
     
     const apiHeader = parseApiHeader(content)
     if (!apiHeader) {
-      console.error(`[curl-mind] No API header found in ${filePath}`)
+      console.error(`[api-mind] No API header found in ${filePath}`)
       return
     }
     
@@ -85,7 +85,7 @@ async function scanMindFiles(dir: string): Promise<string[]> {
       .filter(entry => entry.endsWith(".mind"))
       .map(entry => joinPath(dir, entry))
   } catch (error) {
-    console.error(`[curl-mind] Failed to scan directory ${dir}:`, error)
+    console.error(`[api-mind] Failed to scan directory ${dir}:`, error)
     return []
   }
 }
@@ -125,7 +125,7 @@ export async function listEndpoints(filter?: string): Promise<{ environments: st
   }
 }
 
-export async function getEndpointSchema(api: string, method: string, path: string): Promise<string> {
+export async function getEndpointSchema(api: string, method: string, path: string): Promise<GetEndpointSchemaResult> {
   const index = await getIndex()
   const apiMeta = index.apis[api]
   
@@ -141,7 +141,20 @@ export async function getEndpointSchema(api: string, method: string, path: strin
     throw new Error(`Endpoint ${method} ${path} not found in API "${api}"`)
   }
   
-  return block
+  const endpoint = index.endpoints.find(
+    ep => ep.api === api && ep.method === method && ep.path === path
+  )
+  
+  return {
+    api,
+    title: apiMeta.title,
+    defaultUrl: apiMeta.defaultUrl,
+    environments: apiMeta.servers,
+    method,
+    path,
+    auth: endpoint?.auth || null,
+    schema: block,
+  }
 }
 
 let _readFile: ((path: string) => Promise<string>) | null = null

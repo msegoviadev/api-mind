@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "curl-mind",
+      "name": "api-mind",
       "devDependencies": {
         "@types/bun": "latest",
         "typescript": "^5.0.0",
