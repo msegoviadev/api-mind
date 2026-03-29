@@ -1,0 +1,24 @@
+{
+  "name": "curl-mind",
+  "version": "1.0.0",
+  "description": "LLM tools for HTTP API interaction via curl",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./opencode": "./dist/opencode/index.js"
+  },
+  "files": ["dist", "opencode"],
+  "scripts": {
+    "build": "tsc",
+    "test": "bun test"
+  },
+  "peerDependencies": {
+    "@opencode-ai/plugin": ">=1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/bun": "latest"
+  }
+}
