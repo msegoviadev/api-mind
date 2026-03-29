@@ -53,10 +53,11 @@ check_installed() {
   return 1
 }
 
-# Download API-MIND.md
+# Download API-MIND.md (next to AGENTS.md)
 download_api_mind() {
-  mkdir -p "$CONFIG_DIR"
-  curl -sSL "$API_MIND_URL" -o "$CONFIG_DIR/API-MIND.md"
+  local api_mind_dir="$(dirname "$AGENTS_FILE")"
+  mkdir -p "$api_mind_dir"
+  curl -sSL "$API_MIND_URL" -o "$api_mind_dir/API-MIND.md"
 }
 
 # Add plugin to opencode.json/jsonc using jq
@@ -125,7 +126,7 @@ main() {
   echo "Installing $PLUGIN_NAME..."
   echo ""
 
-  download_api_mind && echo "✓ Downloaded API-MIND.md to $CONFIG_DIR/"
+  download_api_mind && echo "✓ Downloaded API-MIND.md next to AGENTS.md"
   add_plugin && echo "✓ Added plugin to $(find_config_file)"
   add_agents_reference && echo "✓ Added reference to $AGENTS_FILE"
 
