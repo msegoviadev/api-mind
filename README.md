@@ -16,11 +16,11 @@ The LLM then constructs and executes curl commands via the `bash` tool with full
 
 ### 1. Add plugin to your OpenCode config
 
-Add `api-mind` to your `opencode.json` or `opencode.jsonc`:
+Add `@msegoviadev/api-mind` to your `opencode.json` or `opencode.jsonc`:
 
 ```json
 {
-  "plugin": ["api-mind"]
+  "plugin": ["@msegoviadev/api-mind"]
 }
 ```
 
@@ -152,6 +152,7 @@ For local testing without publishing, create a symlink in your test project:
 # In your test project
 mkdir -p .opencode/plugins
 ln -s /path/to/api-mind/src/index.ts .opencode/plugins/api-mind.ts
+ln -s /path/to/api-mind/API-MIND.md API-MIND.md
 ```
 
 ## License
