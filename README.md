@@ -31,7 +31,7 @@ OpenCode will automatically install the plugin from npm on startup.
 Run this command in your project root:
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/msegoviadev/api-mind/main/api-mind.md -o .opencode/api-mind.md
+curl -sSL https://raw.githubusercontent.com/msegoviadev/api-mind/main/API-MIND.md -o API-MIND.md
 ```
 
 ### 3. Reference in your AGENTS.md
@@ -39,7 +39,7 @@ curl -sSL https://raw.githubusercontent.com/msegoviadev/api-mind/main/api-mind.m
 Add this line to your `AGENTS.md`:
 
 ```markdown
-@.opencode/api-mind.md
+@API-MIND.md
 ```
 
 ## Setup
