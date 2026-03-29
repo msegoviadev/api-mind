@@ -14,36 +14,32 @@ The LLM then constructs and executes curl commands via the `bash` tool with full
 
 ## Installation
 
-### OpenCode
+### 1. Add plugin to your OpenCode config
 
-1. Install the package:
-   ```bash
-   bun add api-mind
-   ```
-
-2. Copy tools to your project:
-   ```bash
-   mkdir -p .opencode/tools
-   cp -r node_modules/api-mind/opencode/tools/* .opencode/tools/
-   ```
-
-3. Copy context file:
-   ```bash
-   cp node_modules/api-mind/opencode/api-mind.md .opencode/
-   ```
-
-4. Reference in your `AGENTS.md`:
-   ```markdown
-   @api-mind.md
-   ```
-
-### Plugin System (Coming Soon)
+Add `api-mind` to your `opencode.json` or `opencode.jsonc`:
 
 ```json
-// opencode.json
 {
   "plugin": ["api-mind"]
 }
+```
+
+OpenCode will automatically install the plugin from npm on startup.
+
+### 2. Download the context file
+
+Run this command in your project root:
+
+```bash
+curl -sSL https://raw.githubusercontent.com/msegoviadev/api-mind/main/api-mind.md -o .opencode/api-mind.md
+```
+
+### 3. Reference in your AGENTS.md
+
+Add this line to your `AGENTS.md`:
+
+```markdown
+@.opencode/api-mind.md
 ```
 
 ## Setup
@@ -139,6 +135,24 @@ When `get_endpoint_schema` shows auth requirements, construct headers:
 ## Related
 
 - [spec-mind](https://github.com/msegoviadev/spec-mind) - Generate `.mind` files from OpenAPI specs
+
+## Development
+
+### Build
+
+```bash
+bun run build
+```
+
+### Test Locally
+
+For local testing without publishing, create a symlink in your test project:
+
+```bash
+# In your test project
+mkdir -p .opencode/plugins
+ln -s /path/to/api-mind/src/index.ts .opencode/plugins/api-mind.ts
+```
 
 ## License
 
