@@ -1,9 +1,10 @@
 {
   "name": "api-mind",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "LLM tools for API discovery from .mind spec files",
   "author": {
-    "name": "msegoviadev"
+    "name": "msegoviadev",
+    "email": "marcos@msegovia.dev"
   },
   "repository": {
     "type": "git",
