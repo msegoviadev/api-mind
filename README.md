@@ -14,7 +14,27 @@ The LLM then constructs and executes curl commands via the `bash` tool with full
 
 ## Installation
 
-### 1. Add plugin to your OpenCode config
+### Quick Install
+
+```bash
+# Project-level (recommended)
+curl -sSL https://raw.githubusercontent.com/msegoviadev/api-mind/main/install.sh | bash
+
+# Global (user-wide, available for all projects)
+curl -sSL https://raw.githubusercontent.com/msegoviadev/api-mind/main/install.sh | bash -s -- --global
+```
+
+The script will:
+1. Add `@msegoviadev/api-mind` to your `opencode.json`
+2. Download `API-MIND.md` to the appropriate location
+3. Add `@API-MIND.md` reference to your `AGENTS.md`
+
+### Manual Installation
+
+<details>
+<summary>Click to expand manual installation steps</summary>
+
+#### 1. Add plugin to your OpenCode config
 
 Add `@msegoviadev/api-mind` to your `opencode.json` or `opencode.jsonc`:
 
@@ -26,7 +46,7 @@ Add `@msegoviadev/api-mind` to your `opencode.json` or `opencode.jsonc`:
 
 OpenCode will automatically install the plugin from npm on startup.
 
-### 2. Download the context file
+#### 2. Download the context file
 
 Run this command in your project root:
 
@@ -34,13 +54,15 @@ Run this command in your project root:
 curl -sSL https://raw.githubusercontent.com/msegoviadev/api-mind/main/API-MIND.md -o API-MIND.md
 ```
 
-### 3. Reference in your AGENTS.md
+#### 3. Reference in your AGENTS.md
 
 Add this line to your `AGENTS.md`:
 
 ```markdown
 @API-MIND.md
 ```
+
+</details>
 
 ## Setup
 
