@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1](https://github.com/msegoviadev/api-mind/compare/v0.2.0...v0.2.1) (2026-03-29)
+
+
+### Bug Fixes
+
+* update publish workflow for OIDC trusted publishing ([51af1c2](https://github.com/msegoviadev/api-mind/commit/51af1c2cdf7c30be404faccfcb377d264e1a46ae))
+* use mise tasks for publish with conditional provenance ([ff41796](https://github.com/msegoviadev/api-mind/commit/ff41796a39f25888c35aae1812bd48c9ba432a68))
+
 ## [0.2.0](https://github.com/msegoviadev/api-mind/compare/v0.1.0...v0.2.0) (2026-03-29)
 
 
