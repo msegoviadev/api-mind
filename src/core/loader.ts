@@ -84,8 +84,8 @@ async function scanMindFiles(dir: string): Promise<string[]> {
     return entries
       .filter(entry => entry.endsWith(".mind"))
       .map(entry => joinPath(dir, entry))
-  } catch (error) {
-    console.error(`[api-mind] Failed to scan directory ${dir}:`, error)
+  } catch {
+    console.debug(`[api-mind] Directory not found: ${dir}`)
     return []
   }
 }

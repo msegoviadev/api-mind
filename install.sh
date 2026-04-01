@@ -116,6 +116,44 @@ add_agents_reference() {
   echo "$reference" >> "$AGENTS_FILE"
 }
 
+# Create specs directory with sample file
+create_specs_dir() {
+  # Only create specs directory for project-level installs
+  if $GLOBAL; then
+    return
+  fi
+
+  local specs_dir="$(pwd)/specs"
+  local sample_file="$specs_dir/example.mind"
+
+  # Create directory if it doesn't exist
+  if [[ ! -d "$specs_dir" ]]; then
+    mkdir -p "$specs_dir"
+  fi
+
+  # Create sample file if it doesn't exist
+  if [[ ! -f "$sample_file" ]]; then
+    cat > "$sample_file" << 'EOF'
+# Example .mind file for api-mind
+# API: Example API — https://api.example.com/
+
+## Users
+GET /users
+  -> 200: user[]
+
+POST /users
+  body: {name, email}
+  -> 201: user
+
+GET /users/{id}
+  -> 200: user
+
+## Schemas
+user: {id?:int, name, email}
+EOF
+  fi
+}
+
 # Main
 main() {
   if check_installed; then
@@ -129,6 +167,7 @@ main() {
   download_api_mind && echo "✓ Downloaded API-MIND.md next to AGENTS.md"
   add_plugin && echo "✓ Added plugin to $(find_config_file)"
   add_agents_reference && echo "✓ Added reference to $AGENTS_FILE"
+  create_specs_dir && echo "✓ Created specs/ directory with example.mind"
 
   echo ""
   echo "✓ Installation complete!"

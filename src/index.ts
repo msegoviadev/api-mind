@@ -1,10 +1,23 @@
 import { tool, type Plugin } from "@opencode-ai/plugin"
 import { initIndex, initBunBindings, listApis, listEndpoints, getEndpointSchema } from "./lib"
+import { join } from "path"
 
 initBunBindings()
 
 export const ApiMindPlugin: Plugin = async (ctx) => {
-  const specsDir = `${ctx.directory}/specs`
+  let specsDir = join(ctx.directory, "specs")
+
+  try {
+    const configPath = join(ctx.directory, "api-mind.json")
+    const configFile = await Bun.file(configPath).text()
+    const config = JSON.parse(configFile)
+    if (config.specsDir) {
+      specsDir = join(ctx.directory, config.specsDir)
+    }
+  } catch {
+    // Config file not found or invalid, use default
+  }
+
   await initIndex({ specsDir })
   
   return {

@@ -89,6 +89,20 @@ Add this line to your `AGENTS.md`:
 
 4. Tools automatically load from `specs/*.mind`
 
+## Configuration
+
+By default, api-mind looks for `.mind` files in the `specs/` directory.
+
+To customize the specs location, create an `api-mind.json` file in your project root:
+
+```json
+{
+  "specsDir": "documentation/api-specs"
+}
+```
+
+The path is relative to your project root (where you run `opencode`).
+
 ## Tools
 
 ### list_apis
