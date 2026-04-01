@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.3.0](https://github.com/msegoviadev/api-mind/compare/v0.2.1...v0.3.0) (2026-04-01)
+
+
+### Features
+
+* add configurable specs directory and improve install experience ([7420084](https://github.com/msegoviadev/api-mind/commit/7420084509f27cf2934272c32759bcec581710ad))
+* add install script with --global flag ([fdfe007](https://github.com/msegoviadev/api-mind/commit/fdfe007e676e95cf0e99ffe5a8577b7c3a9a8743))
+
+
+### Bug Fixes
+
+* place API-MIND.md next to AGENTS.md, not in .opencode/ ([8a0d507](https://github.com/msegoviadev/api-mind/commit/8a0d50734ac495a197cd0bb62e04cb78df653904))
+
 ## [0.2.1](https://github.com/msegoviadev/api-mind/compare/v0.2.0...v0.2.1) (2026-03-29)
 
 
