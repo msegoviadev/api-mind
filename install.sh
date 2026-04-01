@@ -177,6 +177,13 @@ main() {
   else
     echo "  Run 'opencode' to start using api-mind"
   fi
+
+  if ! command -v spec-mind &> /dev/null; then
+    echo ""
+    echo "Note: To generate .mind files from OpenAPI specs, install spec-mind:"
+    echo "  brew tap msegoviadev/tap"
+    echo "  brew install spec-mind"
+  fi
 }
 
 main
