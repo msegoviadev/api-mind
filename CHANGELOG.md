@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/msegoviadev/api-mind/compare/v0.3.0...v0.4.0) (2026-04-01)
+
+
+### Features
+
+* add spec-mind installation hint in install script ([76181e4](https://github.com/msegoviadev/api-mind/commit/76181e43073f2b5ba2e7ffd403283b2244aec7cf))
+
 ## [0.3.0](https://github.com/msegoviadev/api-mind/compare/v0.2.1...v0.3.0) (2026-04-01)
 
 
