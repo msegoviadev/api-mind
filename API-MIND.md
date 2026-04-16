@@ -13,4 +13,8 @@
 ## NOTATION
 
 `?` optional | `[ro]` readOnly | `[w]` writeOnly | `=val` default
-`^` header | `~` cookie | `|` enum | `{*:T}` map | `~~name~~` deprecated
+`^` header | `~` cookie | `*N` multipleOf N | `|` enum or nullable
+`OneOf<A,B>` on field = discriminated union
+`{*:T}` = map/dict | `{...}` = open object | `extends` = allOf
+`&` = inline extension | `~~name~~` deprecated | `#` = inline note
+`[multipart]` `[form]` `[binary]` `[text]` = request body encoding
