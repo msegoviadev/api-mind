@@ -42,17 +42,6 @@ find_config_file() {
   fi
 }
 
-# Check if plugin already installed
-check_installed() {
-  local config=$(find_config_file)
-  if [[ -f "$config" ]]; then
-    if grep -q "\"$PLUGIN_NAME\"" "$config" 2>/dev/null; then
-      return 0
-    fi
-  fi
-  return 1
-}
-
 # Download API-MIND.md (next to AGENTS.md)
 download_api_mind() {
   local api_mind_dir="$(dirname "$AGENTS_FILE")"
@@ -161,11 +150,6 @@ create_global_specs_dir() {
 
 # Main
 main() {
-  if check_installed; then
-    echo "✓ $PLUGIN_NAME already installed"
-    exit 0
-  fi
-
   echo "Installing $PLUGIN_NAME..."
   echo ""
 
