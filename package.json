@@ -1,6 +1,6 @@
 {
   "name": "@msegoviadev/api-mind",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "LLM tools for API discovery from .mind spec files",
   "author": {
     "name": "msegoviadev",
