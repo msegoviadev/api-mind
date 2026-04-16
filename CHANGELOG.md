@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/msegoviadev/api-mind/compare/v0.5.0...v0.5.1) (2026-04-16)
+
+
+### Bug Fixes
+
+* allow empty URL in API header regex ([a744824](https://github.com/msegoviadev/api-mind/commit/a74482476d440196401e17db6ecdd004f5baf4f2))
+
 ## [0.5.0](https://github.com/msegoviadev/api-mind/compare/v0.4.0...v0.5.0) (2026-04-16)
 
 
