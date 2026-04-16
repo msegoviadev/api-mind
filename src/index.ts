@@ -1,6 +1,7 @@
 import { tool, type Plugin } from "@opencode-ai/plugin"
-import { initIndex, initBunBindings, listApis, listEndpoints, getEndpointSchema } from "./lib"
+import { initIndex, initBunBindings, listApis, listEndpoints, getEndpointSchema, getCallContext } from "./lib"
 import { join } from "path"
+import { homedir } from "os"
 
 initBunBindings()
 
@@ -18,7 +19,8 @@ export const ApiMindPlugin: Plugin = async (ctx) => {
     // Config file not found or invalid, use default
   }
 
-  await initIndex({ specsDir })
+  const globalSpecsDir = join(homedir(), ".config", "api-mind", "specs")
+  await initIndex({ specsDirs: [specsDir, globalSpecsDir] })
   
   return {
     tool: {
@@ -37,10 +39,10 @@ Call this first when the user references an API you haven't seen yet.`,
       list_endpoints: tool({
         description: `Lists all available endpoints across all loaded .mind files. Also surfaces the available environment names.
 
-Use this to discover what endpoints exist across all APIs. Filter by method, path, or section.
+Use this to discover what endpoints exist across all APIs. Filter by api name, method, path, or section.
 Call this when the user references an API or asks what's available.`,
         args: {
-          filter: tool.schema.string().optional().describe("Substring match on method, path, or section name"),
+          filter: tool.schema.string().optional().describe("Substring match on api name, method, path, or section name"),
         },
         async execute(args) {
           const result = await listEndpoints(args.filter)
@@ -79,6 +81,36 @@ ${authLine}
 ## Schema
 ${result.schema}`
           
+          return output
+        },
+      }),
+
+      get_call_context: tool({
+        description: `Returns the runtime context needed to execute API calls: resolved base URL, active environment, and default values for credentials and parameters.
+
+Call this before constructing a curl command when the user wants to actually invoke an endpoint.
+Do NOT call this just to browse or understand the API shape -- use list_endpoints and get_endpoint_schema for that.
+
+Reads from ~/.config/api-mind/<env>.env and ~/.config/api-mind/<api>/<env>.env.
+Defaults to "dev" unless the user specifies otherwise.`,
+        args: {
+          api: tool.schema.string().describe("API name matching the .mind filename (e.g. auth0-management-v2)"),
+          env: tool.schema.string().optional().describe("Environment to use (e.g. stage, uat). Defaults to dev."),
+        },
+        async execute(args) {
+          const result = await getCallContext(args.api, args.env)
+
+          const defaultsBlock = Object.entries(result.defaults)
+            .map(([k, v]) => `${k}=${v}`)
+            .join("\n")
+
+          const output = `# Call Context: ${result.api}
+# Environment: ${result.env}
+# Base URL: ${result.baseUrl}
+
+## Defaults
+${defaultsBlock || "(none)"}`
+
           return output
         },
       }),

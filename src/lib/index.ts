@@ -1,7 +1,7 @@
-import { setFileReader, setDirReader, setPathJoiner, initIndex, getSpecsDir, listApis, listEndpoints, getEndpointSchema } from "../core/loader"
+import { setFileReader, setDirReader, setPathJoiner, initIndex, getSpecsDirs, listApis, listEndpoints, getEndpointSchema, getCallContext } from "../core/loader"
 import { join } from "path"
 
-export { initIndex, getSpecsDir, listApis, listEndpoints, getEndpointSchema }
+export { initIndex, getSpecsDirs, listApis, listEndpoints, getEndpointSchema, getCallContext }
 
 export function initBunBindings(): void {
   setFileReader(async (path: string) => {

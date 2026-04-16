@@ -1,12 +1,12 @@
-import type { EndpointIndex, ApiMeta, EndpointEntry, InitOptions, GetEndpointSchemaResult } from "./types"
+import type { EndpointIndex, ApiMeta, EndpointEntry, InitOptions, GetEndpointSchemaResult, CallContextResult } from "./types"
 import { parseApiHeader, parseServers, parseEndpoints } from "./parser"
 
 let indexPromise: Promise<EndpointIndex> | null = null
-let currentSpecsDir: string | null = null
+let currentSpecsDirs: string[] | null = null
 
 export async function initIndex(options: InitOptions): Promise<EndpointIndex> {
-  currentSpecsDir = options.specsDir
-  indexPromise = buildIndex(options.specsDir)
+  currentSpecsDirs = options.specsDirs
+  indexPromise = buildIndex(options.specsDirs)
   return indexPromise
 }
 
@@ -19,22 +19,22 @@ export async function getIndex(): Promise<EndpointIndex> {
 
 export function clearIndex(): void {
   indexPromise = null
-  currentSpecsDir = null
+  currentSpecsDirs = null
 }
 
-export function getSpecsDir(): string | null {
-  return currentSpecsDir
+export function getSpecsDirs(): string[] | null {
+  return currentSpecsDirs
 }
 
 export async function rebuildIndex(): Promise<EndpointIndex> {
-  if (!currentSpecsDir) {
-    throw new Error("No specs directory configured. Call initIndex() first.")
+  if (!currentSpecsDirs) {
+    throw new Error("No specs directories configured. Call initIndex() first.")
   }
-  return initIndex({ specsDir: currentSpecsDir })
+  return initIndex({ specsDirs: currentSpecsDirs })
 }
 
-async function buildIndex(specsDir: string): Promise<EndpointIndex> {
-  const files = await scanMindFiles(specsDir)
+async function buildIndex(specsDirs: string[]): Promise<EndpointIndex> {
+  const files = (await Promise.all(specsDirs.map(scanMindFiles))).flat()
   const apis: Record<string, ApiMeta> = {}
   const allEndpoints: EndpointEntry[] = []
   const allEnvironments = new Set<string>()
@@ -112,7 +112,8 @@ export async function listEndpoints(filter?: string): Promise<{ environments: st
   
   if (filter) {
     const lowerFilter = filter.toLowerCase()
-    endpoints = endpoints.filter(ep => 
+    endpoints = endpoints.filter(ep =>
+      ep.api.toLowerCase().includes(lowerFilter) ||
       ep.method.toLowerCase().includes(lowerFilter) ||
       ep.path.toLowerCase().includes(lowerFilter) ||
       ep.section.toLowerCase().includes(lowerFilter)
@@ -154,6 +155,42 @@ export async function getEndpointSchema(api: string, method: string, path: strin
     path,
     auth: endpoint?.auth || null,
     schema: block,
+  }
+}
+
+export async function getCallContext(api: string, env?: string): Promise<CallContextResult> {
+  const index = await getIndex()
+  const apiMeta = index.apis[api]
+
+  if (!apiMeta) {
+    throw new Error(`API "${api}" not found. Available: ${Object.keys(index.apis).join(", ")}`)
+  }
+
+  const homeDir = process.env.HOME || ""
+  const configDir = joinPath(homeDir, ".config", "api-mind")
+  const activeEnv = env ?? "dev"
+  const defaults: Record<string, string> = {}
+
+  try {
+    parseEnvFile(await readFile(joinPath(configDir, `${activeEnv}.env`)), defaults)
+  } catch { /* no base env file */ }
+
+  try {
+    parseEnvFile(await readFile(joinPath(configDir, api, `${activeEnv}.env`)), defaults)
+  } catch { /* no api-specific env file */ }
+
+  const baseUrl = defaults.base_url ?? apiMeta.servers[activeEnv] ?? apiMeta.defaultUrl
+
+  return { api, env: activeEnv, baseUrl, defaults }
+}
+
+function parseEnvFile(content: string, target: Record<string, string>): void {
+  for (const line of content.split("\n")) {
+    const trimmed = line.trim()
+    if (!trimmed || trimmed.startsWith("#")) continue
+    const eqIdx = trimmed.indexOf("=")
+    if (eqIdx === -1) continue
+    target[trimmed.slice(0, eqIdx).trim()] = trimmed.slice(eqIdx + 1).trim()
   }
 }
 

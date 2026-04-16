@@ -154,6 +154,11 @@ EOF
   fi
 }
 
+create_global_specs_dir() {
+  local global_specs="$HOME/.config/api-mind/specs"
+  mkdir -p "$global_specs"
+}
+
 # Main
 main() {
   if check_installed; then
@@ -168,6 +173,7 @@ main() {
   add_plugin && echo "✓ Added plugin to $(find_config_file)"
   add_agents_reference && echo "✓ Added reference to $AGENTS_FILE"
   create_specs_dir && echo "✓ Created specs/ directory with example.mind"
+  create_global_specs_dir && echo "✓ Created global specs directory (~/.config/api-mind/specs/)"
 
   echo ""
   echo "✓ Installation complete!"

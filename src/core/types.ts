@@ -36,7 +36,7 @@ export interface ListEndpointsResult {
 }
 
 export interface InitOptions {
-  specsDir: string
+  specsDirs: string[]
 }
 
 export interface ParsedApiHeader {
@@ -60,4 +60,11 @@ export interface GetEndpointSchemaResult {
   path: string
   auth: string | null
   schema: string
+}
+
+export interface CallContextResult {
+  api: string
+  env: string
+  baseUrl: string
+  defaults: Record<string, string>
 }
