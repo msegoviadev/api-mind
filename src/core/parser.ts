@@ -1,6 +1,6 @@
 import type { ParsedApiHeader, ParsedEndpoint } from "./types"
 
-const API_HEADER_REGEX = /^#\s*API:\s*(.+?)\s*—\s*(.+)$/
+const API_HEADER_REGEX = /^#\s*API:\s*(.+?)\s*—\s*(.*)$/
 const SERVERS_HEADER_REGEX = /^#\s*Servers:\s*(.+)$/
 const SECTION_HEADER_REGEX = /^##\s+(.+?)\s*$/
 const ENDPOINT_LINE_REGEX = /^(~~)?([A-Z]+)(~~)?\s+(\/[^\s]*?)(?:\s+\[[^\]:]+\])*(\s+\[auth:\s*(.+?)\])?\s*$/
