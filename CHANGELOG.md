@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.5.0](https://github.com/msegoviadev/api-mind/compare/v0.4.0...v0.5.0) (2026-04-16)
+
+
+### Features
+
+* add get_call_context tool, global specs dir, and parser improvements ([0df807d](https://github.com/msegoviadev/api-mind/commit/0df807dd2da64d219945912ef246c107a04ac5c9))
+
+
+### Bug Fixes
+
+* always update API-MIND.md on install ([b73d298](https://github.com/msegoviadev/api-mind/commit/b73d2987f5be46e89d6524c83bfc64d2c2bc740c))
+* complete NOTATION legend in API-MIND.md ([1dae1e0](https://github.com/msegoviadev/api-mind/commit/1dae1e04178bc0102ffd0b3ca822319b48c94e4c))
+
 ## [0.4.0](https://github.com/msegoviadev/api-mind/compare/v0.3.0...v0.4.0) (2026-04-01)
 
 
